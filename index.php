@@ -75,24 +75,32 @@ $tasks = [
         </div>
       </header>
 
+      <?php
+      function countNumberOfTasks($arr, $cat)
+      {
+        $newArray = array();
+        foreach ($arr as $key => $value) {
+          if ($value['category'] === $cat) {
+            $newArray[] = $value;
+          } else unset($arr[$key]);
+        }
+        echo count($newArray);
+      }
+      ?>
+
       <div class="content">
         <section class="content__side">
           <h2 class="content__side-heading">Проекты</h2>
-
-          <?php
-          $categories_number = count($categories);
-          $categories_index = 0;
-          while ($categories_index < $categories_number) : ?>
-            <nav class="main-navigation">
-              <ul class="main-navigation__list">
+          <nav class="main-navigation">
+            <ul class="main-navigation__list">
+              <?php foreach ($categories as $key => $value) : ?>
                 <li class="main-navigation__list-item">
-                  <a class="main-navigation__list-item-link" href="#"><?php print($categories[$categories_index]) ?></a>
-                  <span class="main-navigation__list-item-count">0</span>
+                  <a class="main-navigation__list-item-link" href="#"><?= $value; ?></a>
+                  <span class="main-navigation__list-item-count"><?= countNumberOfTasks($tasks, $value); ?></span>
                 </li>
-              </ul>
-            </nav>
-            <?php $categories_index++; ?>
-          <?php endwhile; ?>
+              <?php endforeach; ?>
+            </ul>
+          </nav>
 
           <a class="button button--transparent button--plus content__side-button" href="pages/form-project.html" target="project_add">Добавить проект</a>
         </section>
@@ -122,20 +130,13 @@ $tasks = [
           </div>
 
           <table class="tasks">
-            <?php
-            $tasks_number = count($tasks);
-            $tasks_index = 0;
-            while ($tasks_index < $tasks_number) : ?>
-              <?php $task = $tasks[$tasks_index]; ?>
-              <?php if ($task['result'] === true && $show_complete_tasks == 0) {
-                $tasks_index++;
-                continue;
-              } ?>
-              <tr class="<?php print ($task['result'] === true) ? 'tasks__item task task--completed' : 'tasks__item task' ?>">
+            <?php foreach ($tasks as $key => $value) : ?>
+              <?php if ($value['result'] && $show_complete_tasks == 0) continue; ?>
+              <tr class="tasks__item task <?= $value['result'] ? 'task--completed' : '' ?>">
                 <td class="task__select">
                   <label class="checkbox task__checkbox">
                     <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
-                    <span class="checkbox__text"><?php print($task['task']) ?></span>
+                    <span class="checkbox__text"><?= $value['task'] ?></span>
                   </label>
                 </td>
 
@@ -143,10 +144,9 @@ $tasks = [
                   <a class="download-link" href="#">Home.psd</a>
                 </td>
 
-                <td class="task__date"><?php print($task['date']) ?></td>
+                <td class="task__date"><?= $value['date'] ?></td>
               </tr>
-              <?php $tasks_index++; ?>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
           </table>
         </main>
       </div>
