@@ -1,16 +1,5 @@
-<?php
-$show_complete_tasks = rand(0, 1);
-function countTasksByCategory(array $arr, string $cat): int
-{
-    $counter = 0;
-    foreach ($arr as $task) {
-        if ($task['category'] === $cat) {
-            ++$counter;
-        }
-    }
-    return $counter;
-}
-?>
+<?php $show_complete_tasks = rand(0, 1); ?>
+
 <section class="content__side">
     <h2 class="content__side-heading">Проекты</h2>
     <nav class="main-navigation">

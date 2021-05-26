@@ -1,6 +1,7 @@
 <?php
 
-include('helpers.php');
+require_once('helpers.php');
+require_once('functions.php');
 
 $categories = ["Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
 $tasks = [
@@ -46,6 +47,6 @@ $tasks = [
 $page_content = include_template('main.php', ['categories' => $categories, 'tasks' => $tasks]);
 
 // окончательный HTML-код
-$layout_content = include_template('layout.php', ['content' => $page_content, 'title' => 'Дела в порядке в штате Айова', 'username' => 'Руслан Л.']);
+$layout_content = include_template('layout.php', ['content' => $page_content, 'title' => 'Дела в порядке', 'username' => 'Руслан Л.']);
 
 print($layout_content);
