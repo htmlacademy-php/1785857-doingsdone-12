@@ -43,7 +43,7 @@
     <table class="tasks">
         <?php foreach ($tasks as $key => $value) : ?>
             <?php if ($value['result'] && $show_complete_tasks == 0) continue; ?>
-            <tr class="tasks__item task <?= $value['result'] ? 'task--completed' : '' ?>">
+            <tr class="tasks__item task <?= $value['result'] ? 'task--completed' : '' ?><?= countRemainingHours($tasks, $value['date']) && !$value['result'] ? 'task--important' : '' ?>">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
