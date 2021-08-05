@@ -1,13 +1,11 @@
 CREATE DATABASE taskcontrol
-DEFAULT CHARACTER SET utf8
-DEFAULT COLLATE utf8_general_ci;
+  DEFAULT CHARACTER SET utf8
+  DEFAULT COLLATE utf8_general_ci;
 USE taskcontrol;
 
 CREATE TABLE projects (
   id INT(10) AUTO_INCREMENT PRIMARY KEY,
-  project VARCHAR(64),
-  task_id INT(10),
-  FOREIGN KEY (task_id) REFERENCES tasks (id)
+  project VARCHAR(64)
 );
 
 CREATE TABLE tasks (
@@ -16,7 +14,11 @@ CREATE TABLE tasks (
   status BOOLEAN DEFAULT 0,
   task VARCHAR(255),
   file_url VARCHAR(2083),
-  deadline DATE
+  deadline DATE,
+  project_id INT(10),
+  FOREIGN KEY (project_id) REFERENCES projects (id),
+  INDEX (deadline),
+  INDEX (status)
 );
 
 CREATE TABLE users (
@@ -28,10 +30,7 @@ CREATE TABLE users (
   project_id INT(10),
   task_id INT(10),
   FOREIGN KEY (project_id) REFERENCES projects (id),
-  FOREIGN KEY (task_id) REFERENCES tasks (id)
+  FOREIGN KEY (task_id) REFERENCES tasks (id),
+  UNIQUE INDEX (email),
+  INDEX (name)
 );
-
-CREATE INDEX deadline ON tasks(deadline);
-CREATE INDEX status ON tasks(status);
-CREATE UNIQUE INDEX email ON users(email);
-CREATE INDEX name ON users(name);
